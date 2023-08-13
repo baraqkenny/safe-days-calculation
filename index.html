@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Days calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <section class="container">
+        <div class="header">
+            <div class="content">
+         <h3>First day of your last menstrual period (LMP)</h3>
+         <form action="index.html">
+         <input class="date-input" type="date" placeholder="Click to Pick a Date" required>
+            <div class="cycle">
+            <div class="short-cycle">
+                <label for="">Shortest Cycle Length</label>
+                <select class="short" name="" id="selected-input" required>
+                <option value="">26 Days</option>
+                <option value="">27 Days</option>
+                <option value="">28 Days</option>
+                <option value="">29 Days</option>
+                <option value="">30 Days</option>
+                <option value="">31 Days</option>
+                <option value="">32 Days</option>
+            </select>
+            <p id="select-error"></p>
+            </div>
+              
+            <div class="long-cycle">
+             <label style="margin-left: 20px;">Longest Cycle Length </label>
+            <select class="long" name="" id="selected-input" required>
+                <option value="">26 Days</option>
+                <option value="">27 Days</option>
+                <option value="">28 Days</option>
+                <option value="">29 Days</option>
+                <option value="">30 Days</option>
+                <option value="">31 Days</option>
+                <option value="">32 Days</option>
+            </select>
+            <p id="select-error"></p>
+            </div>
+           <input type="submit" id="submit-btn" class="form-btn" value="Calculate Safe Days">
+            </div>
+         </form>
+        </div>
+    </section>
+
+
+    <script src="app.js"></script>
+</body>
+</html>
