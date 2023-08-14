@@ -13,40 +13,43 @@
         <div class="header">
             <div class="content">
          <h3>First day of your last menstrual period (LMP)</h3>
-         <form action="index.html">
-         <input class="date-input" type="date" placeholder="Click to Pick a Date" required>
+         <form action="">
+            
+         <input class="date-input" id="date-input" type="date" placeholder="Click to Pick a Date" required>
             <div class="cycle">
+
             <div class="short-cycle">
                 <label for="">Shortest Cycle Length</label>
-                <select class="short" name="" id="selected-input" required>
-                <option value="">26 Days</option>
-                <option value="">27 Days</option>
-                <option value="">28 Days</option>
-                <option value="">29 Days</option>
-                <option value="">30 Days</option>
-                <option value="">31 Days</option>
-                <option value="">32 Days</option>
+                <select class="short" name="short-cycle" id="selected-input">
+                <option value="26">26 Days</option>
+                <option value="27">27 Days</option>
+                <option value="28">28 Days</option>
+                <option value="29">29 Days</option>
+                <option value="30">30 Days</option>
+                <option value="31">31 Days</option>
+                <option value="32">32 Days</option>
             </select>
-            <p id="select-error"></p>
             </div>
               
             <div class="long-cycle">
              <label style="margin-left: 20px;">Longest Cycle Length </label>
-            <select class="long" name="" id="selected-input" required>
-                <option value="">26 Days</option>
-                <option value="">27 Days</option>
-                <option value="">28 Days</option>
-                <option value="">29 Days</option>
-                <option value="">30 Days</option>
-                <option value="">31 Days</option>
-                <option value="">32 Days</option>
+            <select class="long" id="selected-input-two">
+                <option value="26">26 Days</option>
+                <option value="27">27 Days</option>
+                <option value="28">28 Days</option>
+                <option value="29">29 Days</option>
+                <option value="30">30 Days</option>
+                <option value="31">31 Days</option>
+                <option value="32">32 Days</option>
             </select>
-            <p id="select-error"></p>
             </div>
-           <input type="submit" id="submit-btn" class="form-btn" value="Calculate Safe Days">
+           <button id="submit-btn" class="form-btn">Calculate Safe Days</button>
             </div>
          </form>
+
+         <div class="result-box"></div>
         </div>
+
     </section>
 
 
