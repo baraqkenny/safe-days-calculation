@@ -20,7 +20,7 @@
 
             <div class="short-cycle">
                 <label for="">Shortest Cycle Length</label>
-                <select class="short" name="short-cycle" id="selected-input">
+                <select class="short" name="short-cycle" id="short-cycle-option">
                 <option value="26">26 Days</option>
                 <option value="27">27 Days</option>
                 <option value="28">28 Days</option>
@@ -33,7 +33,7 @@
               
             <div class="long-cycle">
              <label style="margin-left: 20px;">Longest Cycle Length </label>
-            <select class="long" id="selected-input-two">
+            <select class="long" name="long-cycle" id="long-cycle-option">
                 <option value="26">26 Days</option>
                 <option value="27">27 Days</option>
                 <option value="28">28 Days</option>
@@ -47,12 +47,19 @@
             </div>
          </form>
 
-         <div class="result-box"></div>
         </div>
 
     </section>
 
+    
 
+            <section class="result-content" id="result-content">
+                <!-- <div id="calendar-container" class="calendar"></div> -->
+            </section>
+            <h3 id="your-result" class="your-result"></h3>
+              <div id="calendar-container" class="calendar-container"></div>
+
+  
     <script src="app.js"></script>
 </body>
 </html>
