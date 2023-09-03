@@ -1,64 +1,53 @@
-// variable declaration
-const dateValidation = document.getElementById("date-input");
-const shortCycleOption = document.getElementById("short-cycle-option");
-const longCycleOption = document.getElementById("long-cycle-option");
+  // // variable declaration
+  // const currentCycleStartDate = document.getElementById("date-input");
+  // const shortestCycle = document.getElementById("short-cycle-option");
+  // const longestCycle = document.getElementById("long-cycle-option");
 
-// Get The Value of the Date Input Field
-dateValidation.addEventListener("input", () => {
-  const dateValidationField = dateValidation.value;
-  return dateValidationField;
-});
 
-// Get The Value of the Short Cycle Option
-shortCycleOption.addEventListener("change", () => {
-  const selectedInputField = shortCycleOption.value;
-  return selectedInputField;
-});
 
-// Get The Value of The Long Cycle Option
-longCycleOption.addEventListener("change", () => {
-  const selectedInputFieldTwo = longCycleOption.value;
-  return selectedInputFieldTwo;
-});
+  //Get The Result on Button Click
+  const submitBtn = document.getElementById("submit-btn");
+  submitBtn.addEventListener("click", validateField);
 
-//Get The Result on Button Click
+  function validateField(e) {
+    e.preventDefault();
 
-const submitBtn = document.getElementById("submit-btn");
-submitBtn.addEventListener("click", validateField);
+    // variable declaration
+    const currentCycleStartDate = document.getElementById("date-input");
+    const shortestCycle = document.getElementById("short-cycle-option");
+    const longestCycle = document.getElementById("long-cycle-option");
 
-function validateField(e) {
-      e.preventDefault();
-  // Check if the Date, Short Cycle and Long Cycle Field is Not Empty
-    if (
-      dateValidation.value !== "" &&
-      shortCycleOption.value !== "" &&
-      longCycleOption.value !== ""
-    ) {
-      // const date = new Date(dateValidation.value);
-      // const shortCycle = new Date(date);
-      // const longCycle = new Date(date);
+    // Get date input value
+    const dateInput = currentCycleStartDate.value;
+    console.log(dateInput);
 
-      // shortCycle.setDate(shortCycle.getDate() + (shortCycleOption.value - 18));
-      // longCycle.setDate(longCycle.getDate() + (longCycleOption.value - 10));
+    // Check if the date field is selected
+    if (dateInput !== "") {
+      // Get Shortest Cycle value
+      const shortCycle = shortestCycle.value;
 
-      // const unsafeDays = Math.abs(
-      //   (longCycle - shortCycle) / (1000 * 60 * 60 * 24)
-      // );
-      // const safeDays = 30 - unsafeDays;
+      //Get the longest cycle value
+      const longCycle = longestCycle.value;
 
-      const currDate = new Date();
-      const firstDayOfLastPeriod = new Date(dateValidation.value);
-      firstDayOfLastPeriod.setDate(currDate.getDate() - shortestCycle);
-      const x = new Date(firstDayOfLastPeriod);
-      x.setDate(x.getDate() + 18);
+      // Get the Shortest Menstrual Cycle
+      const getShortCycle = shortCycle - 18;
+      console.log(getShortCycle);
 
-      const y = new Date(firstDayOfLastPeriod);
-      y.setDate(y.getDate() + (longestCycle - 10));
+      // Parse dateInput into a Date object
+      const selectedDate = new Date(dateInput);
 
-      // Check if a date is between X and Y
-      function isUnsafeDay(date) {
-        return date >= x && date <= y;
-      }
+      // Get the first fertile days
+      const firstFertileDay = selectedDate.getDate() + (getShortCycle - 1);
+      console.log("first fertile day:", firstFertileDay);
+
+      // Get the longest Menstrual Cycle
+      const getLongCycle = longCycle - 11;
+      console.log(getLongCycle);
+
+      // Get the last fertile days
+      const lastFertileDay = selectedDate.getDate() + (getLongCycle - 1);
+      console.log("last fertile day:", lastFertileDay);
+
 
       // Show the current date in this format =>  August 16, 2023 07:15:05 PM
       const options = {
@@ -76,9 +65,6 @@ function validateField(e) {
         currentDate
       );
 
-      console.log(`Unsafe Days: ${unsafeDays}`);
-      console.log(`Safe Days: ${safeDays}`);
-
       // Display the Result on The Browser
       const resultContent = document.getElementById("result-content");
       resultContent.innerHTML += ` 
@@ -86,14 +72,14 @@ function validateField(e) {
                              <h4 style="margin-top: 2rem">Date: <span style="font-weight: 300;">${formattedDate}</span></h4>  
                              <div class="inputs">
                              <h3>Your Inputs: </h3>
-                             <p>Your First day of your last menstrual period (LMP): ${dateValidation.value}</p>
-                             <p>Your Shortest Cycle Length: ${shortCycleOption.value}</p>
-                             <p>Your Shortest Cycle Length: ${longCycleOption.value}</p>
+                             <p>Your First day of your last menstrual period (LMP): ${dateInput}</p>
+                             <p>Your Shortest Cycle Length: ${shortCycle}</p>
+                             <p>Your Shortest Cycle Length: ${longCycle}</p>
                              </div>
                             `;
       // Set date value to empty after displaying the result
       if (resultContent) {
-        dateValidation.value = "";
+        dateInput = "";
       }
 
       // Display the calendar User interface on the Page for a a better User Experience
@@ -138,21 +124,23 @@ function validateField(e) {
         dateElement.className = "current-date";
         calendarContainer.appendChild(dateElement);
 
-        // Add text content to each days
-          const daysBetweenSafeAndUnsafe = daysInMonth - unsafeDays; 
-          
-          const textElement = document.createElement("p");
-          textElement.textContent = `${
-            daysBetweenSafeAndUnsafe ? "safe day" : "unsafe"
-          }`;
-          textElement.className = "safe";
-          dateElement.appendChild(textElement);
+        // Determine if the day is safe or unsafe
+        let textContent = "";
+        if (firstFertileDay) {
+          textContent = "unSafe";
+        } else if (lastFertileDay) {
+          textContent = "safe";
+        } else {
+          textContent = "";
+        }
 
-        
+        // Add text content to each da
+        const textElement = document.createElement("p");
+        textElement.textContent = textContent.toLowerCase();
+        textElement.className = "safe";
+        dateElement.appendChild(textElement);
       }
     }
   }
-
-
 
 
