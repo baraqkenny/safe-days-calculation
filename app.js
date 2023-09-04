@@ -1,9 +1,3 @@
-  // // variable declaration
-  // const currentCycleStartDate = document.getElementById("date-input");
-  // const shortestCycle = document.getElementById("short-cycle-option");
-  // const longestCycle = document.getElementById("long-cycle-option");
-
-
 
   //Get The Result on Button Click
   const submitBtn = document.getElementById("submit-btn");
@@ -13,12 +7,12 @@
     e.preventDefault();
 
     // variable declaration
-    const currentCycleStartDate = document.getElementById("date-input");
+    let currentCycleStartDate = document.getElementById("date-input");
     const shortestCycle = document.getElementById("short-cycle-option");
     const longestCycle = document.getElementById("long-cycle-option");
 
     // Get date input value
-    const dateInput = currentCycleStartDate.value;
+    let dateInput = currentCycleStartDate.value;
     console.log(dateInput);
 
     // Check if the date field is selected
@@ -78,9 +72,9 @@
                              </div>
                             `;
       // Set date value to empty after displaying the result
-      if (resultContent) {
-        dateInput = "";
-      }
+    
+        
+
 
       // Display the calendar User interface on the Page for a a better User Experience
       // Get the current date
@@ -124,21 +118,36 @@
         dateElement.className = "current-date";
         calendarContainer.appendChild(dateElement);
 
-        // Determine if the day is safe or unsafe
+        // Add a text content to each day
         let textContent = "";
-        if (firstFertileDay) {
-          textContent = "unSafe";
-        } else if (lastFertileDay) {
+        if (day < firstFertileDay) {
           textContent = "safe";
+        } else if (day <= lastFertileDay) {
+          textContent = "unsafe";
         } else {
-          textContent = "";
+          textContent = "safe";
+        }
+        // <i class="bx bx-x"></i>;
+        // <i class="bx bx-check"></i>;
+     const textElement = document.createElement("p");
+     textElement.textContent = textContent.toLowerCase();
+     textElement.className = `${textContent === "safe" ? "safe-days" : "unsafe-days"}`;
+     dateElement.appendChild(textElement);
+
+
+        let displayIcon = "";
+        if (day < firstFertileDay) {
+          displayIcon = `<i class='bx bx-check'></i>`;
+        } else if (day <= lastFertileDay) {
+          displayIcon = `<i  class='bx bx-x' ></i>`;
+        } else {
+          displayIcon = `<i class='bx bx-check'></i>`;
         }
 
-        // Add text content to each da
-        const textElement = document.createElement("p");
-        textElement.textContent = textContent.toLowerCase();
-        textElement.className = "safe";
-        dateElement.appendChild(textElement);
+        const addIcon = document.createElement("span");
+        addIcon.innerHTML = displayIcon;
+        dateElement.appendChild(addIcon);
+
       }
     }
   }
