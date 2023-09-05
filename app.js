@@ -112,28 +112,42 @@
         calendarContainer.appendChild(dayElement);
       }
 
+      // let dayCount = 0;
+
       for (let day = 1; day <= daysInMonth; day++) {
         const dateElement = document.createElement("li");
         dateElement.textContent = day;
         dateElement.className = "current-date";
         calendarContainer.appendChild(dateElement);
 
+        //  const dayInCycle = day - selectedDate.getDate();
         // Add a text content to each day
         let textContent = "";
         if (day < firstFertileDay) {
           textContent = "safe";
-        } else if (day <= lastFertileDay) {
+        }  else if (day <= lastFertileDay) {
           textContent = "unsafe";
-        } else {
+        } 
+        else {
           textContent = "safe";
         }
-        // <i class="bx bx-x"></i>;
-        // <i class="bx bx-check"></i>;
-     const textElement = document.createElement("p");
-     textElement.textContent = textContent.toLowerCase();
-     textElement.className = `${textContent === "safe" ? "safe-days" : "unsafe-days"}`;
-     dateElement.appendChild(textElement);
 
+        // let textContent = "";
+  
+  // if (dayCount < 30) {
+  //   if (dayInCycle === 0) {
+  //     textContent = "safe"; // First fertile day is the first safe day
+  //   } else if (day < firstFertileDay) {
+  //     textContent = "unsafe";
+  //   }
+  // }
+
+        const textElement = document.createElement("p");
+        textElement.textContent = textContent.toLowerCase();
+        textElement.className = `${
+          textContent === "safe" ? "safe-days" : "unsafe-days"
+        }`;
+        dateElement.appendChild(textElement);
 
         let displayIcon = "";
         if (day < firstFertileDay) {
@@ -143,13 +157,85 @@
         } else {
           displayIcon = `<i class='bx bx-check'></i>`;
         }
-
+        // Display the Icon on the browser
         const addIcon = document.createElement("span");
         addIcon.innerHTML = displayIcon;
         dateElement.appendChild(addIcon);
 
       }
-    }
-  }
+        if(selectedDate.getDate() > 15){
+          
+          // Get next month
+          let nextMonth = new Date(selectedDate);
+          nextMonth.setMonth(nextMonth.getMonth() + 1);
+          const currentYear = nextMonth.getFullYear();
 
+          const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+          const daysInNextMonth = new Date(
+            nextMonth.getFullYear(),
+            nextMonth.getMonth() + 1,
+            0
+          ).getDate();
+
+          
+      const nextCalendar = document.getElementById("next-month-calendar");
+      const newMonth = document.createElement("div");
+      newMonth.textContent = `${nextMonth.toLocaleString("default", {
+        month: "long",
+      })} ${currentYear}`;
+      newMonth.className = "new-month";
+      nextCalendar.appendChild(newMonth);
+
+      for (const day of daysOfWeek) {
+        const dayElement = document.createElement("li");
+        dayElement.textContent = day;
+        dayElement.className = "new-month-weekdays";
+        nextCalendar.appendChild(dayElement);
+      }
+
+      for (let day = 1; day <= daysInNextMonth; day++) {
+        const dateElement = document.createElement("li");
+        dateElement.textContent = day;
+        dateElement.className = "new-month-date";
+        nextCalendar.appendChild(dateElement);
+
+        //  const calendarHTML = [];
+
+        // calendarHTML.push(`<table border="1"><tr><th>Day</th><th>Date</th><th>Status</th></tr>`);
+
+        // for (let day = 1; day <= daysInNextMonth; day++) {
+        //   let status = "safe";
+
+        //   if (day > firstFertileDay && day <= lastFertileDay) {
+        //     status = "unsafe";
+        //   }
+
+        //   calendarHTML.push(`<tr><td>${day}</td><td>${nextMonth.getMonth() + 1}/${day}</td><td>${status}</td></tr>`);
+        // }
+
+        // calendarHTML.push(`</table>`);
+        // nextCalendar.innerHTML = calendarHTML.join('');
+      }
+
+        }
+
+        
+
+        // Loop through the days of the following month
+        // for (let day = 1; day <= daysInNextMonth; day++) {
+        //   if (day <= firstFertileDay) {
+        //     console.log(`Day ${day} (${nextMonth.getMonth() + 1}/${day}): safe`
+        //     );
+        //   } else if (day <= lastFertileDay) {
+        //     console.log(`Day ${day} (${nextMonth.getMonth() + 1}/${day}): unsafe`);
+        //   } else {
+        //     console.log(`Day ${day} (${nextMonth.getMonth() + 1}/${day}): safe`
+        //     );
+        //   }
+        // }
+      }
+    
+  }
+  
 
