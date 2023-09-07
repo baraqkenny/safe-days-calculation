@@ -99,7 +99,7 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
 
 
               
-
+console.log(currDate)
    const renderCalendar = () => {
     let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(), // getting first day of month
     lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // getting last date of month
