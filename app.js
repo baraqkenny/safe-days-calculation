@@ -88,6 +88,7 @@
 const daysTag = document.querySelector(".days"),
 currDate = document.querySelector(".current-date"),
 prevNextIcon = document.querySelectorAll(".icons span");
+
 // getting new date, current year and month
 let date = new Date(),
 currYear = date.getFullYear(),
@@ -98,27 +99,65 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
               "August", "September", "October", "November", "December"];
 
 
-              
-console.log(currDate)
-   const renderCalendar = () => {
-    let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(), // getting first day of month
-    lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // getting last date of month
-    lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), // getting last day of month
-    lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); // getting last date of previous month
+
+   function renderCalendar() {
+    let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(), 
+    lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), 
+    lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), 
+    lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); 
+    
     let liTag = "";
-    for (let i = firstDayofMonth; i > 0; i--) { // creating li of previous month last days
+
+    for (let i = firstDayofMonth; i > 0; i--) {
         liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
     }
-    for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
-        // adding active class to li if the current day, month, and year matched
-        let isToday = i === date.getDate() && currMonth === new Date().getMonth() 
-                     && currYear === new Date().getFullYear() ? "active" : "";
-        liTag += `<li class="${isToday}">${i}</li>`;
-    }
-    for (let i = lastDayofMonth; i < 6; i++) { // creating li of next month first days
+
+    for (let i = 1; i <= lastDateofMonth; i++) {
+      // creating li of all days of current month
+      // adding active class to li if the current day, month, and year matched
+      let isToday =
+        i === date.getDate() &&
+        currMonth === new Date().getMonth() &&
+        currYear === new Date().getFullYear()
+          ? "active"
+          : "";
+
+      //  Add a text-content of safe and unsafe to each day
+      let textContent = "";
+      if (i < selectedDate.getDate()) {
+        textContent = "";
+      } else if (i < firstFertileDay) {
+        textContent = "safe";
+      } else if (i <= lastFertileDay) {
+        textContent = "unsafe";
+      } else {
+        textContent = "safe";
+      }
+
+      //  add displayIcon to the safe and unsafe day
+        let displayIcon = "";
+        if (i < selectedDate.getDate()) {
+        textContent = "";
+          } else if (i < firstFertileDay) {
+          displayIcon = `<i class='bx bx-check'></i>`;
+        } else if (i <= lastFertileDay) {
+          displayIcon = `<i  class='bx bx-x' ></i>`;
+        } else {
+          displayIcon = `<i class='bx bx-check'></i>`;
+        }
+
+      liTag += `<li class="${isToday}">
+        ${i}
+        <p class=${textContent === "safe" ? "safe-days" : "unsafe-days"}>${textContent}</p>
+        <p>${displayIcon}</p>
+        </li>`;
+      }
+          
+    for (let i = lastDayofMonth; i < 6; i++) { 
+      // creating li of next month first days
         liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`
     }
-    currentDate.innerText = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
+    currDate.innerText = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
     daysTag.innerHTML = liTag;
 }
 renderCalendar();
@@ -138,7 +177,7 @@ prevNextIcon.forEach((icon) => {
     } else {
       date = new Date(); // pass the current date as date value
     }
-    renderCalendar(); // calling renderCalendar function
+    renderCalendar(); 
   });
 });
  
