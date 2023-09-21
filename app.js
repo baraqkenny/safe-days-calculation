@@ -1,4 +1,3 @@
-
   //Get The Result on Button Click
   const submitBtn = document.getElementById("submit-btn");
   submitBtn.addEventListener("click", validateField);
@@ -19,6 +18,9 @@
 
     // Check if the date field is selected
     if (dateInput !== "") {
+      submitBtn.disabled = true;
+
+     submitBtn.classList.add("hidden");
 
       const calendarWrapper = document.querySelector('.wrapper')
       calendarWrapper.style.display = "block";
@@ -85,6 +87,25 @@
       yourResult.textContent = "Your Result";
       result.appendChild(yourResult);
 
+
+        // const calendarContainer = document.querySelector(".calendar-container");
+        
+
+        // for(let day = 1; day < 31; day++){
+
+        //   let name = ""
+        //   if(day < 7) {
+        //     const dayName = getDayName(day);
+        //     name = `<div class="name">${dayName}</div>`
+        //   }
+
+        //   calendarContainer.insertAdjacentHTML("beforeend", `<div
+        //   class="day">${name}${day}</div>`);
+        // }
+
+
+
+
 const daysTag = document.querySelector(".days"),
 currDate = document.querySelector(".current-date"),
 prevNextIcon = document.querySelectorAll(".icons span");
@@ -122,36 +143,80 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
           ? "active"
           : "";
 
-      //  Add a text-content of safe and unsafe to each day
+      // Calculate the day number within the 29-day cycle
+      let dayNumber = (i - firstFertileDay + 29) % 29;
+
+      // Determine the textContent based on the day number
       let textContent = "";
+      if (dayNumber < 0) {
+        // Handle days before the safe period
+        textContent = "safe";
+      } else if (dayNumber === 0) {
+        // Handle the 29th day, make the textContent empty
+        textContent = "";
+      } else if (dayNumber <= lastFertileDay - firstFertileDay) {
+        // Handle days within the unsafe period
+        textContent = "unsafe";
+      } else {
+        // Handle days after the unsafe period
+        textContent = "safe";
+      }
+
+      //  Add a text-content of safe and unsafe to each day
+      //    let textContent = "";
+
+      // if (i < selectedDate.getDate()) {
+      //   textContent = "";
+      // } else if (i < firstFertileDay) {
+      //   textContent = "safe";
+      // } else if (i <= lastFertileDay) {
+      //   textContent = "unsafe";
+      // } else if(i > lastFertileDay) {
+      //   textContent = "safe";
+      // }
+      //  else if( selectedDate.getDate() && i === 29) {
+      //   textContent = ""
+      // }
+
+      // else {
+      //   // Calculate the day difference between i and selectedDate
+      //   // const dayDifference = i - selectedDate.getDate();
+
+      //   // // Calculate the number of 31-day cycles that have passed
+      //   // const fullCycles = Math.floor(dayDifference / 31);
+      //   // console.log(fullCycles)
+
+      //   // // Calculate the day within the current 31-day cycle
+      //   // const dayWithinCycle = dayDifference % 31;
+
+      //   // // Check if we're within the 31-day cycle limit
+      //   // if (dayWithinCycle < 31) {
+      //   //   textContent = "safe";
+      //   // } else {
+      //   //   textContent = "";
+      //   // }
+      // }
+
+      //  add displayIcon to the safe and unsafe day
+      let displayIcon = "";
       if (i < selectedDate.getDate()) {
         textContent = "";
       } else if (i < firstFertileDay) {
-        textContent = "safe";
+        displayIcon = `<i class='bx bx-check'></i>`;
       } else if (i <= lastFertileDay) {
-        textContent = "unsafe";
+        displayIcon = `<i  class='bx bx-x' ></i>`;
       } else {
-        textContent = "safe";
+        displayIcon = `<i class='bx bx-check'></i>`;
       }
-
-      //  add displayIcon to the safe and unsafe day
-        let displayIcon = "";
-        if (i < selectedDate.getDate()) {
-        textContent = "";
-          } else if (i < firstFertileDay) {
-          displayIcon = `<i class='bx bx-check'></i>`;
-        } else if (i <= lastFertileDay) {
-          displayIcon = `<i  class='bx bx-x' ></i>`;
-        } else {
-          displayIcon = `<i class='bx bx-check'></i>`;
-        }
 
       liTag += `<li class="${isToday}">
         ${i}
-        <p class=${textContent === "safe" ? "safe-days" : "unsafe-days"}>${textContent}</p>
+        <p class=${
+          textContent === "safe" ? "safe-days" : "unsafe-days"
+        }>${textContent}</p>
         <p>${displayIcon}</p>
         </li>`;
-      }
+    }
           
     for (let i = lastDayofMonth; i < 6; i++) { 
       // creating li of next month first days

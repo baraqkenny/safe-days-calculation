@@ -81,6 +81,12 @@ select{
     font-size: 17px;
     cursor: pointer;
 }
+
+.form-btn.hidden {
+    opacity: 0.5; 
+    pointer-events: none; 
+}
+
 /* Displayed Result Styling */
 .result-content{
     padding: 20px;
@@ -194,6 +200,7 @@ header .current-date{
   list-style: none;
   text-align: center; 
 
+
 }
 .calendar .days{
   margin-bottom: 20px;
@@ -204,17 +211,18 @@ header .current-date{
   font-size: 1.07rem;
   
 }
-.calendar .weeks li{
+ .weeks li{
   font-weight: 500;
   cursor: default;
+  background-color: rgb(22, 108, 238);
+  padding: 1rem 2rem;
+  border: 1px solid #000;
+  color: #fff;
 }
 .calendar .days li{
   z-index: 1;
-  cursor: pointer;
-  position: relative;
-  margin-top: 30px;
-  border: 2px solid;
-  padding: .5rem 3rem .5rem 2rem;
+  border: 1px solid #000;
+ 
 }
 .days li.inactive{
   color: #aaa;
@@ -251,13 +259,11 @@ header .current-date{
 .safe-days{
     padding-top: 1rem;
     color: green;
-    padding-right: 2px;
 }
 
 .unsafe-days{
     padding-top: 1rem;
     color: red;
-    padding-right: 5px;
     /* text-align: center; */
 }
  /* Safe and unsafe days icon */
@@ -316,9 +322,23 @@ header .current-date{
   font-weight: bold;
 }
 
+/* .calendar-container{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    height: 100%;
+    margin-top: 2rem;
+}
 
-
-
+.day{
+    border-bottom: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    text-align: center;
+    padding-top: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 200ms, color 200ms;
+} */
 
 
 
