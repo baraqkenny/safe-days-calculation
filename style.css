@@ -227,20 +227,7 @@ header .current-date{
 .days li.inactive{
   color: #aaa;
 }
-/* .days li.active{
-  color: #fff;
-} */
-/* .days li::before{
-  position: absolute;
-  content: "";
-  left: 50%;
-  top: 50%;
-  height: 40px;
-  width: 40px;
-  z-index: -1;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-} */
+
 .days li.active::before{
   background: #9B59B6;
 }
@@ -281,12 +268,24 @@ header .current-date{
 }
 
 /* Next Month Calendar */
-.next-month-calendar{
-    width: 650px;
-    margin: 1rem;
+
+ .next-calendar{
+  margin-top: 2rem;
+  margin-left: 2rem;
+  width: 550px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  display: none;
+  margin-bottom: 2rem;
 }
 
-.new-month{
+/* .next-calendar{
+    width: 650px;
+    margin: 1rem;
+} */
+
+/* .next-calendar{
   padding: 1.5rem;
   width: 95.2%;
   background: rgb(10, 106, 231);
@@ -295,9 +294,56 @@ header .current-date{
   color: #ffffff;
   font-size: 20px;
   font-weight: bold;
-} 
+} */
 
-.new-month-weekdays{
+.next-month-calendar{
+    padding: 20px;
+}
+
+.next-month-calendar  ul{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  text-align: center; 
+
+
+}
+.next-month-days{
+  margin-bottom: 20px;
+}
+.next-month-calendar li{
+  color: #333;
+  width: calc(100% / 7);
+  font-size: 1.07rem;
+  
+}
+ .next-month-weekdays li{
+  font-weight: 500;
+  cursor: default;
+  background-color: rgb(22, 108, 238);
+  padding: 1rem 2rem;
+  border: 1px solid #000;
+  color: #fff;
+}
+.next-month-calendar .next-month-days li{
+  z-index: 1;
+  border: 1px solid #000;
+ 
+}
+.next-month-days li.inactive{
+  color: #aaa;
+}
+
+.next-month-days li.active::before{
+  background: #9B59B6;
+}
+.next-month-days li:not(.active):hover::before{
+  background: #f2f2f2;
+}
+
+
+
+/* .next-month-weekdays{
   display: inline-block;
   width: 13.6%;
   text-align: center;
@@ -320,7 +366,7 @@ header .current-date{
   padding: 1rem 2rem;
   border: 1px solid;
   font-weight: bold;
-}
+} */
 
 /* .calendar-container{
     display: grid;

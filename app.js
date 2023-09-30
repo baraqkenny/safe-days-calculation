@@ -5,8 +5,6 @@
   function validateField(e) {
     e.preventDefault();
 
-   
-
     // variable declaration
     let currentCycleStartDate = document.getElementById("date-input");
     const shortestCycle = document.getElementById("short-cycle-option");
@@ -50,6 +48,8 @@
       const lastFertileDay = selectedDate.getDate() + (getLongCycle - 1);
       console.log("last fertile day:", lastFertileDay);
 
+  
+
       // Show the current date in this format =>  August 16, 2023 07:15:05 PM
       const options = {
         year: "numeric",
@@ -76,7 +76,7 @@
                              <p>Your First day of your last menstrual period (LMP): ${dateInput}</p>
 
                              <p>Your Shortest Cycle Length: ${shortCycle}</p>
-                             <p>Your Shortest Cycle Length: ${longCycle}</p>
+                             <p>Your Longest Cycle Length: ${longCycle}</p>
                              </div>
                             `;
       // Set date value to empty after displaying the result
@@ -85,30 +85,12 @@
       const result = document.getElementById("your-result");
       const yourResult = document.createElement("h3");
       yourResult.textContent = "Your Result";
-      result.appendChild(yourResult);
+      result.appendChild(yourResult)
 
-
-        // const calendarContainer = document.querySelector(".calendar-container");
-        
-
-        // for(let day = 1; day < 31; day++){
-
-        //   let name = ""
-        //   if(day < 7) {
-        //     const dayName = getDayName(day);
-        //     name = `<div class="name">${dayName}</div>`
-        //   }
-
-        //   calendarContainer.insertAdjacentHTML("beforeend", `<div
-        //   class="day">${name}${day}</div>`);
-        // }
-
-
-
+// Rendering the Calendar
 
 const daysTag = document.querySelector(".days"),
-currDate = document.querySelector(".current-date"),
-prevNextIcon = document.querySelectorAll(".icons span");
+currDate = document.querySelector(".current-date")
 
 // getting new date, current year and month
 let date = new Date(),
@@ -119,9 +101,7 @@ currMonth = date.getMonth();
 const months = ["January", "February", "March", "April", "May", "June", "July",
               "August", "September", "October", "November", "December"];
 
-
-
-   function renderCalendar() {
+ function renderCalendar(){
     let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(), 
     lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), 
     lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), 
@@ -133,6 +113,21 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
         liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
     }
 
+    const fertileDays = 29;
+    const middleFertileDay = Math.floor(fertileDays / 2);
+
+    const newfirstFertileDay = selectedDate.getDate() - middleFertileDay;
+    const newlastFertileDay = selectedDate.getDate() + (fertileDays - middleFertileDay) - 1;
+
+    console.log("first fertile day:", newfirstFertileDay);
+    console.log("last fertile day:", newlastFertileDay);
+
+  //   const resultData = 29 - (selectedDate.getDate() + lastFertileDay + firstFertileDay);
+  //   console.log(resultData);
+  //  if(resultData){
+  //   renderNextMonthCalendar(currYear, currMonth);
+  //  }
+
     for (let i = 1; i <= lastDateofMonth; i++) {
       // creating li of all days of current month
       // adding active class to li if the current day, month, and year matched
@@ -143,59 +138,83 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
           ? "active"
           : "";
 
-      // Calculate the day number within the 29-day cycle
-      let dayNumber = (i - firstFertileDay + 29) % 29;
-
+  
       // Determine the textContent based on the day number
-      let textContent = "";
-      if (dayNumber < 0) {
-        // Handle days before the safe period
-        textContent = "safe";
-      } else if (dayNumber === 0) {
-        // Handle the 29th day, make the textContent empty
+      //  Add a text-content of safe and unsafe to each day
+      // let dayCounter = 1
+  // let textContent = "";
+
+  //       if (i < selectedDate.getDate()) {
+  //           textContent = "";
+  //       } else if (i < selectedDate.getDate() + 29) {
+  //           textContent = dayCounter <= selectedDate.getDate() + 14 ? "safe" : "unsafe";
+  //       } else {
+  //           textContent = "";
+        
+
+
+
+
+         let textContent = "";
+
+      if (i < selectedDate.getDate()) {
         textContent = "";
-      } else if (dayNumber <= lastFertileDay - firstFertileDay) {
-        // Handle days within the unsafe period
+      } else if (i < firstFertileDay) {
+        textContent = "safe";
+      } else if (i <= lastFertileDay) {
         textContent = "unsafe";
-      } else {
-        // Handle days after the unsafe period
+      } else if (i > lastFertileDay + lastDateofMonth) {
         textContent = "safe";
       }
+ 
+      
 
-      //  Add a text-content of safe and unsafe to each day
-      //    let textContent = "";
+        // let monthToRender = currMonth; // Initialize the month to render
+  // let monthToRender = currMonth; // Initialize the month to render
+  // let yearToRender = currYear; // Initialize the year to render
 
-      // if (i < selectedDate.getDate()) {
-      //   textContent = "";
-      // } else if (i < firstFertileDay) {
-      //   textContent = "safe";
-      // } else if (i <= lastFertileDay) {
-      //   textContent = "unsafe";
-      // } else if(i > lastFertileDay) {
-      //   textContent = "safe";
-      // }
-      //  else if( selectedDate.getDate() && i === 29) {
-      //   textContent = ""
-      // }
+  // // Check if selectedDate is greater than 15
+  // if (selectedDate.getDate() > 15) {
+  //   // If selectedDate is greater than 15, set the next month to render
+  //   monthToRender += 1;
 
-      // else {
-      //   // Calculate the day difference between i and selectedDate
-      //   // const dayDifference = i - selectedDate.getDate();
+  //   // Check if the next month exceeds 11 (December)
+  //   if (monthToRender > 11) {
+  //     monthToRender = 0; // January (0) is followed by February (1), and so on.
+  //     yearToRender += 1; // Increment the year if necessary
+  //   }
+  // }
 
-      //   // // Calculate the number of 31-day cycles that have passed
-      //   // const fullCycles = Math.floor(dayDifference / 31);
-      //   // console.log(fullCycles)
+  // // Update currMonth and currYear to match the month and year to render
+  // currMonth = monthToRender;
+  // currYear = yearToRender;
 
-      //   // // Calculate the day within the current 31-day cycle
-      //   // const dayWithinCycle = dayDifference % 31;
+  // // Calculate the starting day within the 29-day cycle
+  // let startDay = date.getDate() - firstFertileDay + 1;
 
-      //   // // Check if we're within the 31-day cycle limit
-      //   // if (dayWithinCycle < 31) {
-      //   //   textContent = "safe";
-      //   // } else {
-      //   //   textContent = "";
-      //   // }
-      // }
+  // for (let i = 1; i <= lastDateofMonth; i++) {
+  // //   // Calculate the day number within the 29-day cycle
+  //   let dayNumber = (startDay + i - 1) % 29;
+
+  // //   // Determine the textContent based on the day number
+  // //   let textContent = "";
+  //    if (i < date.getDate()) {
+  //     // If i is less than the selected date, textContent is empty
+  //     textContent = "";
+  //   } else if (i < firstFertileDay) {
+  //     // If i is less than firstFertileDay, textContent is "safe"
+  //     textContent = "safe";
+  //   } else if (i <= lastFertileDay) {
+  //     // If i is less than or equal to lastFertileDay, textContent is "unsafe"
+  //     textContent = "unsafe";
+  //   } else if (i <= lastFertileDay + 10) {
+  //     // For the ten days following lastFertileDay, textContent is "safe"
+  //     textContent = "safe";
+  //   } else {
+  //     // After the ten-day period, textContent is empty
+  //     textContent = "";
+  //   }
+
 
       //  add displayIcon to the safe and unsafe day
       let displayIcon = "";
@@ -217,268 +236,125 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
         <p>${displayIcon}</p>
         </li>`;
     }
-          
-    for (let i = lastDayofMonth; i < 6; i++) { 
-      // creating li of next month first days
-        liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`
+    
+
+
+      for (let i = lastDayofMonth; i < 6; i++) {
+        // creating li of next month first days
+        liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`;
+      }
+      currDate.innerText = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
+      daysTag.innerHTML = liTag;
     }
-    currDate.innerText = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
-    daysTag.innerHTML = liTag;
-}
 renderCalendar();
 
-prevNextIcon.forEach((icon) => {
-  // getting prev and next icons
-  icon.addEventListener("click", () => {
-    // adding click event on both icons
-    // if clicked icon is previous icon then decrement current month by 1 else increment it by 1
-    currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
-    if (currMonth < 0 || currMonth > 11) {
-      // if current month is less than 0 or greater than 11
-      // creating a new date of current year & month and pass it as date value
-      date = new Date(currYear, currMonth, new Date().getDate());
-      currYear = date.getFullYear(); // updating current year with new date year
-      currMonth = date.getMonth(); // updating current month with new date month
-    } else {
-      date = new Date(); // pass the current date as date value
-    }
-    renderCalendar(); 
-  });
-});
+
+function renderNextMonthCalendar(year, month) {
+  const nextMonthDaysTag = document.querySelector(".next-month-days")
+  const nextCurrDate = document.querySelector(".next-month-current-date");
+  const nextCalendar = document.querySelector(".next-calendar");
+
+  nextCalendar.style.display = 'block'
+
+  let nextMonth = month + 1;
+  let nextYear = year;
+
+  if (nextMonth > 11) {
+    nextMonth = 0;
+    nextYear++;
+  }
+
+  let firstDayOfNextMonth = new Date(nextYear, nextMonth, 1).getDay();
+  let lastDateOfNextMonth = new Date(nextYear, nextMonth + 1, 0).getDate();
+
+  let liTag = "";
+
+  for (let i = firstDayOfNextMonth; i > 0; i--) {
+    liTag += `<li class="inactive">${lastDateOfNextMonth - i + 1}</li>`;
+  }
+
+  for (let i = 1; i <= lastDateOfNextMonth; i++) {
+    let isToday =
+      i === date.getDate() &&
+      nextMonth === date.getMonth() &&
+      nextYear === date.getFullYear()
+        ? "active"
+        : "";
+
+    let textContent = "";
+
+    // if (i < selectedDate.getDate()) {
+    //   textContent = "";
+    // } else if (i < firstFertileDay) {
+    //   textContent = "safe";
+    // } else if (i <= lastFertileDay) {
+    //   textContent = "unsafe";
+    // } else {
+    //   textContent = "";
+    // }
+
+
  
+    let displayIcon = "";
+    // if (i < selectedDate.getDate()) {
+    //   textContent = "";
+    // } else if (i < firstFertileDay) {
+    //   displayIcon = `<i class='bx bx-check'></i>`;
+    // } else if (i <= lastFertileDay) {
+    //   displayIcon = `<i class='bx bx-x'></i>`;
+    // } else {
+    //   displayIcon = `<i class='bx bx-check'></i>`;
+    // }
+
+    liTag += `<li class="${isToday}">
+            ${i}
+            <p class=${
+              textContent === "safe" ? "safe-days" : "unsafe-days"
+            }>${textContent}</p>
+            <p>${displayIcon}</p>
+            </li>`;
+  }
 
 
+  // Create a new ul element for the next month's calendar
+  const nextMonthUL = document.createElement("ul");
+  nextMonthUL.className = "next-month-ul";
+  nextMonthUL.innerHTML = liTag;
 
-    //   const presentDate = new Date();
+  // Append the next month's calendar to the daysTag
+  nextMonthDaysTag.appendChild(nextMonthUL);
 
-    //   // Get the current month and year
-    //   const currentMonth = presentDate.getMonth();
-    //   const currentYear = presentDate.getFullYear();
+  nextCurrDate.innerText = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
+  nextMonthDaysTag.innerHTML = liTag;
+}
 
-    //   // Create an array of month names
-    //   const monthNames = [
-    //     "January",
-    //     "February",
-    //     "March",
-    //     "April",
-    //     "May",
-    //     "June",
-    //     "July",
-    //     "August",
-    //     "September",
-    //     "October",
-    //     "November",
-    //     "December",
-    //   ];
-
-      
-    //   // Create an array of day names
-    //   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-    //   // Create a table th element for the days of the week and display on the browser
-    //   const daysInweekContainer = document.getElementById('days-in-week')
-    //   const daysInweek = document.createElement('th');
-    //   daysInweek.textContent = dayNames;
-    //   daysInweek.className = ''
-    //   daysInweekContainer.appendChild(daysInweek);
-
-
-    //   // const calendarContainer = document.getElementById('calendar-container')
-    //   // calendarContainer.innerHTML = daysInweekContainer
-    //   // display the days of the week on the browser
-      
-
-    //   // Get the first day of the month
-    //   const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
-    //   const firstDayOfWeek = firstDayOfMonth.getDay(); // 0 for Sunday, 1 for Monday, etc.
-
-    //   // Get the number of days in the current month
-    //   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-      
-    // //  const calendarHeader = document.getElementById("calendar-header");
-    // //  calendarHeader.innerHTML = daysInMonth;
-
-    //   // Display the month and year in the calendar header
-    //   document.getElementById(
-    //     "calendar-month-year"
-    //   ).textContent = `${monthNames[currentMonth]} ${currentYear}`;
-
-    //   // Populate the calendar table
-    //   const calendarBody = document.getElementById("calendar-body");
-    //   let dayCounter = 1;
-
-    //   for (let i = 0; i < 6; i++) {
-    //     // Assume a maximum of 6 rows in the calendar
-    //     const row = document.createElement("tr");
-
-    //     for (let j = 0; j < 7; j++) {
-    //       const cell = document.createElement("td");
-
-    //       if (i === 0 && j < firstDayOfWeek) {
-    //         cell.textContent = ""; // Empty cell for days before the first day of the month
-    //       } else if (dayCounter <= daysInMonth) {
-    //         cell.textContent = dayCounter;
-
-    //         if (
-    //           currentDate.getDate() === dayCounter &&
-    //           currentDate.getMonth() === currentMonth
-    //         ) {
-    //           cell.className = "current-date"; // Highlight the current date
-    //         }
-
-    //         dayCounter++;
-    //       } else {
-    //         cell.textContent = ""; // Empty cell for days after the last day of the month
-    //       }
+// Determine when to render the calendars
+// if (selectedDate.getDate() > 15) {
+//   // Render both current and next month's calendars
+//   renderCalendar(currYear, currMonth);
+//   renderNextMonthCalendar(currYear, currMonth);
+// } else {
+//   // Render only the current month's calendar
+//   renderCalendar(currYear, currMonth);
+// }
   
-    //       row.appendChild(cell);
-    //     }
-        
-    //     calendarBody.appendChild(row);
+    function findNumberToAddToGet29(givenNumber) {
+      // Calculate the number to add to givenNumber to get 29
+      const numberToAdd = 29 - givenNumber;
 
-       // Display the calendar User interface on the Page
-      //  Get the current date
-//   const presentDate = new Date();
+      const result =  givenNumber + numberToAdd
+      result === 29? console.log('yes') : console.log('no')
+    }
+    findNumberToAddToGet29(2)
+    // Example usage:
+    // const givenNumber1 = 10;
+    // const result1 = findNumberToAddToGet29(givenNumber1);
+    // console.log(`For ${givenNumber1}, add ${result1} to get 29.`);
 
-// // Get the current month and year
-// const currentMonth = presentDate.getMonth();
-// const currentYear = presentDate.getFullYear();
+    // const givenNumber2 = 15;
+    // const result2 = findNumberToAddToGet29(givenNumber2);
+    // console.log(`For ${givenNumber2}, add ${result2} to get 29.`);
 
-// // Get the days of the week
-// const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-// // Get the number of days in the current month
-// const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-// // Get the day of the week for the first day of the month (0 for Sunday, 1 for Monday, etc.)
-// const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
-
-// const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
-
-// // Create the calendar HTML
-// const calendarContainer = document.getElementById("calendar-container");
-// const month = document.createElement("div");
-// month.textContent = `${presentDate.toLocaleString("default", {
-//   month: "long",
-// })} ${currentYear}`;
-// month.className = "current-month";
-// calendarContainer.appendChild(month);
-
-
-// Add the day names (e.g., Sun, Mon, etc.)
-// for (const day of daysOfWeek) {
-//   const dayElement = document.createElement("li");
-//   dayElement.textContent = day;
-//   dayElement.className = "week-days";
-//   calendarContainer.appendChild(dayElement);
-// }
-
-// const calendarContent = document.getElementById("calendar-content");
-
-// for (let i = 0; i < firstDayOfMonth; i++) {
-//   const emptyCell = document.createElement("li");
-//   emptyCell.textContent = "";
-//   emptyCell.className = "empty-cell"; // Apply a class for styling
-//   calendarContent.appendChild(emptyCell);
-// }
-
-// Create cells for the days of the month
-// for (let day = 1; day <= daysInMonth; day++) {
-//   const dateElement = document.createElement("li");
-//   dateElement.textContent = day;
-//   dateElement.className = "current-date";
-//   calendarContent.appendChild(dateElement);
-
-// With this code, empty cells are added for the days before the first day of the month, and the days of the month are displayed correctly with respect to the days of the week.
-
-
-
-
-
-
-
-          //  const dayInCycle = day - selectedDate.getDate();
-          // Add a text content to each day
-          // let textContent = "";
-          // if (day < selectedDate.getDate()) {
-          //   textContent = "";
-          // } else if (day < firstFertileDay) {
-          //   textContent = "safe";
-          // } else if (day <= lastFertileDay) {
-          //   textContent = "unsafe";
-          // } else {
-          //   textContent = "safe";
-          // }
-
-          // let textContent = "";
-
-          // if (dayCount < 30) {
-          //   if (dayInCycle === 0) {
-          //     textContent = "safe"; // First fertile day is the first safe day
-          //   } else if (day < firstFertileDay) {
-          //     textContent = "unsafe";
-          //   }
-          // }
-
-        //   const textElement = document.createElement("p");
-        //   textElement.textContent = textContent.toLowerCase();
-        //   textElement.className = `${
-        //     textContent === "safe" ? "safe-days" : "unsafe-days"
-        //   }`;
-        //   dateElement.appendChild(textElement);
-
-        //   let displayIcon = "";
-        //   if (day < firstFertileDay) {
-        //     displayIcon = `<i class='bx bx-check'></i>`;
-        //   } else if (day <= lastFertileDay) {
-        //     displayIcon = `<i  class='bx bx-x' ></i>`;
-        //   } else {
-        //     displayIcon = `<i class='bx bx-check'></i>`;
-        //   }
-        //   // Display the Icon on the browser
-        //   const addIcon = document.createElement("span");
-        //   addIcon.innerHTML = displayIcon;
-        //   dateElement.appendChild(addIcon);
-        // }
-        //   if(selectedDate.getDate() > 15){
-
-        //     // Get next month
-        //     let nextMonth = new Date(selectedDate);
-        //     nextMonth.setMonth(nextMonth.getMonth() + 1);
-        //     const currentYear = nextMonth.getFullYear();
-
-        //     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-        //     const daysInNextMonth = new Date(
-        //       nextMonth.getFullYear(),
-        //       nextMonth.getMonth() + 1,
-        //       0
-        //     ).getDate();
-
-        // const nextCalendar = document.getElementById("next-month-calendar");
-        // const newMonth = document.createElement("div");
-        // newMonth.textContent = `${nextMonth.toLocaleString("default", {
-        //   month: "long",
-        // })} ${currentYear}`;
-        // newMonth.className = "new-month";
-        // nextCalendar.appendChild(newMonth);
-
-        // for (const day of daysOfWeek) {
-        //   const dayElement = document.createElement("li");
-        //   dayElement.textContent = day;
-        //   dayElement.className = "new-month-weekdays";
-        //   nextCalendar.appendChild(dayElement);
-        // }
-
-        // for (let day = 1; day <= daysInNextMonth; day++) {
-        //   const dateElement = document.createElement("li");
-        //   dateElement.textContent = day;
-        //   dateElement.className = "new-month-date";
-        //   nextCalendar.appendChild(dateElement)
-
-        //   }
-
-        
-} 
-}  
-    
+  } 
+}
+  
