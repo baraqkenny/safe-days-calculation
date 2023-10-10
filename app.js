@@ -110,7 +110,9 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
      lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
 
    let liTag = "";
-  const daysBetween = lastDateofMonth - selectedDate.getDate(); 
+  const daysBetween = (lastDateofMonth - (selectedDate.getDate() - 1)); 
+  console.log(daysBetween);
+
    for (let i = firstDayofMonth; i > 0; i--) {
      liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
    }
@@ -124,7 +126,9 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
        currYear === new Date().getFullYear()
          ? "active"
          : "";
-    
+
+
+     
      let textContent = "";
      const firstDay = firstFertileDay - selectedDate.getDate();
      const daysBetweenFirstAndLastFertileDay = lastFertileDay - firstFertileDay;
@@ -134,22 +138,26 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
        textContent = "safe";
      } else if (i <= lastFertileDay) {
        textContent = "unsafe";
-     } else if (i > lastFertileDay && daysBetween === 29) {
-       textContent = "";
-     } else if (i > lastFertileDay) {
-        if (i === 1) {
-          // If it's the first day of the month and the textContent is "unsafe", continue "unsafe"
-          if (i > lastFertileDay) {
-            textContent = "safe";
-          } else {
-            // Otherwise, continue "safe"
-            textContent = "safe";
-          }
-        } else {
-          // For other days of the current month, continue the previous month's textContent
-          textContent = textContent;
-        }
+     }  else if(i <= daysBetween){
+        textContent = "safe"
      } 
+    //  else if (i > lastFertileDay){
+    //    textContent = ""
+    //  }
+    //   else if (i > lastFertileDay) {
+    //     if (i === 1) {
+    //       // If it's the first day of the month and the textContent is "unsafe", continue "unsafe"
+    //       if (i > lastFertileDay) {
+    //         textContent = "safe";
+    //       } else {
+    //         // Otherwise, continue "safe"
+    //         textContent = "safe";
+    //       }
+    //     } else {
+    //       // For other days of the current month, continue the previous month's textContent
+    //       textContent = textContent;
+    //     }
+    //  } 
 
      //  add displayIcon to the safe and unsafe day
      let displayIcon = "";
@@ -221,9 +229,9 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
            : "";
 
        let textContent = "";
-          if(i <= lastFertileDay){
+          if(lastFertileDay > 31){
             textContent = "unsafe";
-          }else if(i > lastFertileDay){
+          }else{
             textContent = "safe"
           }
        //  if (i > lastDateofMonth) {
